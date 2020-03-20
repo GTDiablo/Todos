@@ -47,10 +47,9 @@ class App extends Component {
     }
   }
 
-  delete_todo = id =>{
-    console.log(id);
-    const todos = this.state.todos.filter(todo=> todo.id !== id);
-    this.setState({todos})
+  delete_todo = id => {
+    const todos = this.state.todos.filter(todo => todo.id !== id);
+    this.setState({ todos })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -78,25 +77,26 @@ class App extends Component {
           <div className="header__input">
             <input
               type="text"
+              aria-label="todo_input"
               ref={a => this._input_element = a}
               placeholder="Todo"
               onKeyPress={e => { if (e.key === 'Enter') this.add_todo(); }} />
-            <button onClick={this.add_todo}>Add</button>
+            <button title="Add New Todo" name="Add New Todo" aria-label="add" onClick={this.add_todo}>Add</button>
           </div>
         </div>
 
         <div className="todo__container">
-          { todos.length < 1 ? <p className="todo__empty">Your todo list is empty.</p>: null}
+          {todos.length < 1 ? <p className="todo__empty">Your todo list is empty.</p> : null}
           {
             todos.map(todo => (
-              <div className="todo" key={todo.id}>
+              <div className="todo" key={'todo-' +todo.id}>
                 <div className="todo__data">
                   <div className="todo__data__title">{todo.title}</div>
                   <div className="todo__data__date">{format_date(todo.date)}</div>
                 </div>
                 <div className="todo__action">
-                  <button className="todo__action__delete">
-                    <i className="fa fa-trash-o" onClick={()=> this.delete_todo(todo.id)}></i>
+                  <button className="todo__action__delete" aria-label="delete">
+                    <i className="fa fa-trash-o" onClick={() => this.delete_todo(todo.id)}></i>
                   </button>
                 </div>
               </div>
